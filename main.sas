@@ -1,10 +1,10 @@
 data dn_1;
-infile 'C:\Users\fannlab\Desktop\GENI_UK_DN_½²¿P»ö©M¸­¦t°a\phs000389.v1.pht002379.v1.p1.c1.GoKinD_GENIE_Phenotype.GRU.txt' dlm='09'x firstobs=2 dsd;
+infile 'fliepath' dlm='09'x firstobs=2 dsd;
 length SUBJID $16 Cohort $11;
 input dbGaP_SubjID SUBJID $ Kidney ESRD Age Agedx DurT1D Sex Bsite_1 Bsite_2 LIPID BMI HBA1C Cohort $;
 run; 
 data dn_2;
-infile 'C:\Users\fannlab\Desktop\GENI_UK_DN_½²¿P»ö©M¸­¦t°a\GENIE_UK_ROI_FINAL.txt' dlm=' ' dsd;
+infile 'fliepath' dlm=' ' dsd;
 length FamilyID $16 SUBJID $16 ;
 input FamilyID $ SUBJID $ FatherID MotherID Sex Kidney;
 run; 
@@ -18,7 +18,7 @@ data dn_3;
 merge dn_1 dn_2;
 by SUBJID;
 run;
-/*¤w³]©wªºcase¡Bcontrol*/
+/*å·²è¨­å®šçš„caseã€control*/
 data dn_4;
 set dn_3;
 if FatherID=. then delete;
@@ -76,7 +76,7 @@ run;
 proc freq data=dn_4;
 table outcome*bsite/chisq;
 run;
-/*¦Û°O³]©w¡ABMI>=24*/
+/*è‡ªè¨˜è¨­å®šï¼ŒBMI>=24*/
 data dn_5;
 set dn_3;
 if FatherID=. then delete;
@@ -129,7 +129,7 @@ run;
 proc freq data=dn_5;
 table outcome*bsite/chisq;
 run;
-/*¦Û°O³]©w¡ABMI<24*/
+/*è‡ªè¨˜è¨­å®šï¼ŒBMI<24*/
 data dn_6;
 set dn_3;
 if FatherID=. then delete;
@@ -180,7 +180,7 @@ run;
 proc freq data=dn_6;
 table outcome*bsite/chisq;
 run;
-/*ÀË©w±`ºA*/
+/*æª¢å®šå¸¸æ…‹*/
 proc univariate data=dn_4 normal;
 var Age;
 qqplot Age;
@@ -302,6 +302,3 @@ proc npar1way wilcoxon correct=no data=dn_6;
 class outcome;
 var durt1d;
 run;
-
-
-
